@@ -77,8 +77,8 @@ service.interceptors.response.use(
     error => {
         if (error && error.response) {
             if (error.response.status === 401) {
-                error.message = i18n.t('user.pleaseLogin')
                 logout()
+                return
             } else {
                 error.message = error.response.data.message
             }

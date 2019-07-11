@@ -15,7 +15,6 @@
     :label-max-file-size-exceeded="$t('upload.maxFileSizeExceeded')"
     :label-max-file-size="$t('upload.maxFileSize')"
     :max-file-size="10 * 1024 * 1024"
-    :before-add-file="beforeAddFile"
     allow-multiple="true"
     accepted-file-types="image/jpeg, image/png"
     v-bind:files="files"
@@ -26,7 +25,7 @@
 <script>
 import vueFilePond, { setOptions } from "vue-filepond"
 import { mapMutations } from 'vuex'
-import { accountApi } from '@/api/account'
+import cookies from '@/utils/cookies'
 
 import "filepond/dist/filepond.min.css"
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
@@ -45,21 +44,6 @@ const FilePond = vueFilePond(
   FilePondPluginImagePreview
 )
 
-setOptions({
-  server: {
-    url: "http://localhost:8888",
-    process: {
-      url: "/api/upload",
-      method: "POST",
-      withCredentials: false,
-      headers: {
-        Authorization: "Bearer "
-      },
-      timeout: 7000
-    }
-  }
-})
-
 export default {
   name: "ImageUpload",
   data: function() {
@@ -68,14 +52,22 @@ export default {
     }
   },
   created () {
-    Promise.all([
-      this.getUserInfo()
-    ]).then(() => {})
+    // 配置 filepond
+    setOptions({
+      server: {
+        url: this.$serverUrl,
+        process: {
+          url: "api/upload",
+          method: "POST",
+          withCredentials: false,
+          headers: {
+            Authorization: "Bearer " + cookies.get('token')
+          }
+        }
+      }
+    })
   },
   methods: {
-    ...mapMutations('user', {
-      setUser: 'set'
-    }),
     ...mapMutations('links', {
       setLink: 'setLink',
       setWrappedLink: 'setWrappedLink',
@@ -84,14 +76,6 @@ export default {
       setHtmlType: 'setHtmlType',
       setMarkdownType: 'setMarkdownType'
     }),
-    // 获取当前用户信息
-    getUserInfo () {
-      return accountApi.getCurrentUserInfo()
-        .then(res => {
-          this.setUser(res)
-        })
-        .catch(() => {})
-    },
     // 处理图片上传
     handleProcessFile(error, file) {
       var self = this
@@ -125,10 +109,6 @@ export default {
         el.classList.add("selected")
         this.setShowLinks(true)
       }
-    },
-    // 在图片上传之前的拦截
-    beforeAddFile(item) {
-      return false
     }
   },
   components: {

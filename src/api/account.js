@@ -1,7 +1,7 @@
 import request from '@/plugin/axios'
 
+// 用户登录 URI
 const LOGIN_URI = '/auth/login'
-const CURRENT_USER_INFO_URI = '/auth/info'
 
 export const accountApi = {
   // 用户登录
@@ -10,13 +10,6 @@ export const accountApi = {
       url: LOGIN_URI,
       method: 'post',
       data
-    })
-  },
-  // 获取当前用户信息
-  getCurrentUserInfo() {
-    return request({
-      url: CURRENT_USER_INFO_URI,
-      method: 'get'
     })
   }
 }

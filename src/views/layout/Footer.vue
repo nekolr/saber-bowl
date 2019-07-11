@@ -1,6 +1,6 @@
 <template>
     <footer class="footer-bottom">
-        <p class="copyright">Copyright © 2018 - 2019<i class="fa fa-heart heart"></i> <a href="#">Saber 酱</a> All Rights Reserved</p>
+        <p class="copyright">Copyright © 2018 - 2019<i class="fa fa-heart heart"></i> <a href="https://github.com/nekolr/saber">Saber 酱</a> All Rights Reserved</p>
     </footer>
 </template>
 

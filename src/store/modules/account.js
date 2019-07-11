@@ -11,7 +11,7 @@ export default {
          * @param {Object} param context
          * @param {Object} param response 登录后获得的信息
          */
-        login ({ commit, dispatch }, response) {
+        login ({ commit }, response) {
             return new Promise(async resolve => {
                 cookies.set('token', response.token)
                 // 填充 vuex 用户信息
@@ -25,7 +25,7 @@ export default {
          * @param {Object} param context
          * @param {Object} param confirm {Boolean} 是否需要确认
          */
-        logout ({ commit, dispatch }, { confirm = false } = {}) {
+        logout ({ commit }, { confirm = false } = {}) {
             /**
              * @description 注销
              */

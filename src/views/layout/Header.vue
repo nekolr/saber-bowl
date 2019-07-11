@@ -1,7 +1,7 @@
 <template>
     <header>
       <div class="header">
-        <a class="logo" href="#">
+        <a class="logo" :href="baseUrl">
           <svg class="animation" height="30" width="105" xmlns="http://www.w3.org/2000/svg">
             <text stroke-dasharray="90 310" stroke-width="0.5px" text-shadow="0 0 1px #fb9a40" stroke="#fb9a40" fill="none" text-transform="uppercase" y="100%" x="50%" text-anchor="middle" font-family="saber-chan" font-size="30">Saber 酱
               <animate attributeName="stroke-dashoffset" begin="-2s" dur="8s" from="0" to="-400" repeatCount="indefinite"></animate>
@@ -20,33 +20,63 @@
             <text font-family="saber-chan" font-size="30" fill="#777" y="100%" x="0">Saber 酱</text>
           </svg>
         </a>
-        <div v-if="userInfo" class="r-dropdown">
-          <Dropdown placement="bottom" trigger="click" @on-click="handleDropdown">
+        <div class="r-dropdown">
+          <Dropdown v-if="userInfo.username" placement="bottom" trigger="click" @on-click="handleDropdown">
             <a href="javascript:void(0)">{{ userInfo.username }}</a>
             <DropdownMenu slot="list">
                 <DropdownItem name="images">{{ $t('user.myImages') }}</DropdownItem>
                 <DropdownItem name="logout">{{ $t('user.logout') }}</DropdownItem>
             </DropdownMenu>
           </Dropdown>
+          <a v-if="!userInfo.username" @click="login" href="javascript:void(0)">{{ $t('user.login') }}</a>
         </div>
       </div>
     </header>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
+import { userApi } from '@/api/user'
+import { Promise } from 'q';
 
 export default {
   name: 'Header',
+  data () {
+    return {
+      baseUrl: window.location.protocol + "//" + window.location.host
+    }
+  },
   computed: {
     ...mapGetters("user", {
       userInfo: 'getUser'
     })
   },
+  created () {
+    Promise.all([
+      this.getUserInfo()
+    ]).then(() => {})
+  },
   methods: {
+    ...mapMutations('user', {
+      setUser: 'set'
+    }),
     ...mapActions('account', {
         logout: 'logout'
     }),
+    // 获取当前用户信息
+    getUserInfo () {
+      if (this.$route.path === '/login') {
+        return new Promise((resolve) => {
+          resolve()
+        })
+      } else {
+        return userApi.getCurrentUserInfo()
+        .then(res => {
+          this.setUser(res)
+        })
+        .catch(() => {})
+      }
+    },
     // 登录
     login() {
       this.$router.push({
@@ -60,6 +90,11 @@ export default {
       if (name === 'logout') {
         this.logout({
           confirm: true
+        })
+      }
+      if (name === 'images') {
+        this.$router.push({
+          name: 'Images'
         })
       }
     }
