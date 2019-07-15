@@ -9,7 +9,7 @@
 
 <script>
 import Header from "./views/layout/Header.vue";
-import Links from "./views/Links.vue";
+import Links from "./components/Links.vue";
 import Footer from "./views/layout/Footer.vue";
 
 export default {

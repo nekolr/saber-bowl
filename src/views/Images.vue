@@ -1,16 +1,12 @@
 <template>
   <div class="image-container">
-    <Card
-      v-for="image of imageList"
-      :key="image.id"
-      style="text-align: center;width:250px;height: 250px;float:left;margin: 5px 5px 5px 5px;">
-      <img :src="$serverUrl + 'images/' + image.shortName" style="max-width: 220px;max-height: 220px;" />
-    </Card>
+    <Card v-for="item of imageList" :key="item.id" :image="item" />
   </div>
 </template>
 
 <script>
-import { imageApi } from "@/api/image";
+import { imageApi } from "@/api/image"
+import Card from "@/components/Card"
 
 export default {
   name: "Images",
@@ -36,6 +32,9 @@ export default {
         })
         .catch(() => {})
     }
+  },
+  components: {
+    Card
   }
 }
 </script>

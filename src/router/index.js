@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import ImageUpload from "../views/ImageUpload.vue"
+import ImageUpload from "@/components/ImageUpload.vue"
 import Login from "../views/Login.vue"
 import Images from "../views/Images.vue"
 

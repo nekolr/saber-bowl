@@ -21,14 +21,14 @@
           </svg>
         </a>
         <div class="r-dropdown">
-          <Dropdown v-if="userInfo.username" placement="bottom" trigger="click" @on-click="handleDropdown">
+          <Dropdown v-if="userInfo" placement="bottom" trigger="click" @on-click="handleDropdown">
             <a href="javascript:void(0)">{{ userInfo.username }}</a>
             <DropdownMenu slot="list">
                 <DropdownItem name="images">{{ $t('user.myImages') }}</DropdownItem>
                 <DropdownItem name="logout">{{ $t('user.logout') }}</DropdownItem>
             </DropdownMenu>
           </Dropdown>
-          <a v-if="!userInfo.username" @click="login" href="javascript:void(0)">{{ $t('user.login') }}</a>
+          <a v-if="!userInfo" @click="login" href="javascript:void(0)">{{ $t('user.login') }}</a>
         </div>
       </div>
     </header>
