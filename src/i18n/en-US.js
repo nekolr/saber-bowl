@@ -18,6 +18,9 @@ t.upload.tapToUndo = 'Tap to Undo'
 
 t.links = {}
 t.links.successfulCopy = 'Successful copy'
+t.links.cancel = 'Cancel'
+t.links.origin = 'Original link'
+t.links.copy = 'Copy'
 
 t.user = {}
 t.user.login = 'Login'

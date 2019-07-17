@@ -1,83 +1,105 @@
 <template>
-  <div class="image-container">
-    <Card v-for="item of imageList" :key="item.id" :image="item" />
+  <div class="container">
+    <div class="image-container">
+    <Card
+      v-for="item of imageList"
+      :key="item.id"
+      :image="item"
+    />
+  </div>
+  <div class="s-page">
+      <Page
+        :total="totalSize"
+        :page-size="queryParams.size"
+        @on-change="getImages"
+        show-total
+        show-elevator
+        :styles="pageStyle"
+      />
+    </div>
   </div>
 </template>
+
 
 <script>
 import { imageApi } from "@/api/image"
 import Card from "@/components/Card"
+import { mapMutations } from 'vuex'
+import { Page } from "iview"
 
 export default {
   name: "Images",
   data() {
     return {
-      queryParams: {
-          page: 1,
-          size: 20
+      pageStyle: {
+        height: "50px",
+        marginTop: "20px"
       },
-      imageList: []
+      queryParams: {
+        page: 1,
+        size: 20
+      },
+      imageList: [],
+      totalSize: 0
     }
   },
   created() {
-    Promise.all([this.getImages()]).then(() => {})
+    // 隐藏分享链接
+    this.setShowShare(false)
+    Promise.all([this.getImages(1)]).then(() => {})
   },
   methods: {
+    ...mapMutations('links', {
+      setShowShare: 'setShowShare'
+    }),
     // 获取用户的图片列表
-    getImages() {
+    getImages(current) {
+      this.queryParams.page = current
       return imageApi
         .getImages(this.queryParams)
         .then(res => {
           this.imageList = res.data
+          this.totalSize = res.totalSize
         })
         .catch(() => {})
     }
   },
   components: {
-    Card
+    Card,
+    Page
   }
-}
+};
 </script>
 
 <style>
 @media (min-width: 768px) {
-    .image-container {
-        width:540px;
-    }
+  .image-container {
+    width: 540px;
+  }
 }
 
 @media (min-width: 992px) {
-    .image-container {
-        width:790px;
-    }
+  .image-container {
+    width: 790px;
+  }
 }
 
 @media (min-width: 1200px) {
-    .image-container {
-        width:1040px;
-    }
-}
-
-@media (min-height: 768px) {
-    .image-container {
-        height:500px;
-    }
-}
-
-@media (min-height: 992px) {
-    .image-container {
-        height:750px;
-    }
-}
-
-@media (min-height: 1200px) {
-    .image-container {
-        height:1000px;
-    }
+  .image-container {
+    width: 1040px;
+  }
 }
 
 .image-container {
-    margin: 0 auto;
+  margin: 5px auto;
+  max-height: 5600px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
+.s-page {
+  margin: 20px auto;
+  height: 50px;
+  text-align: center;
+}
 </style>

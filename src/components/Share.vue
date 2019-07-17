@@ -1,17 +1,17 @@
 <template>
-  <div class="uploader-links-container" v-show="showLinks">
+  <div class="uploader-links-container" v-show="showShare">
     <div class="links-container">
       <div class="uploader-links-panel">
         <div class="panel-heading">
-          <Button @click="cancelShowLinks">取消</Button>&nbsp;
+          <Button @click="cancelShowShare">{{ $t('links.cancel') }}</Button>&nbsp;
           <Poptip trigger="click" :content="$t('links.successfulCopy')" placement="right">
-            <Button id="copyButton" data-clipboard-target="#link">复制</Button>
+            <Button id="copyButton" data-clipboard-target="#link">{{ $t('links.copy') }}</Button>
           </Poptip>
         </div>
         <div class="panel-body">
           <div class="links-left">
             <ButtonGroup vertical size="large">
-              <Button :type="originType" @click="handleOrigin">原始链接</Button>
+              <Button :type="originType" @click="handleOrigin">{{ $t('links.origin') }}</Button>
               <Button :type="htmlType" @click="handleHtml">HTML</Button>
               <Button :type="markdownType" @click="handleMarkdown">Markdown</Button>
             </ButtonGroup>
@@ -36,12 +36,12 @@ clipboard.on('success', function(e) {
 })
 
 export default {
-  name: "Links",
+  name: "Share",
   computed: {
     ...mapGetters("links", {
       link: 'getLink',
       wrappedLink: 'getWrappedLink',
-      showLinks: 'getShowLinks',
+      showShare: 'getShowShare',
       originType: 'getOriginType',
       htmlType: 'getHtmlType',
       markdownType: 'getMarkdownType'
@@ -49,15 +49,15 @@ export default {
   },
   methods: {
     ...mapMutations('links', {
-      setShowLinks: 'setShowLinks',
+      setShowShare: 'setShowShare',
       setWrappedLink: 'setWrappedLink',
       setOriginType: 'setOriginType',
       setHtmlType: 'setHtmlType',
       setMarkdownType: 'setMarkdownType'
     }),
-    cancelShowLinks () {
-        // 隐藏 Links 组件
-        this.setShowLinks(false)
+    cancelShowShare () {
+        // 隐藏分享组件
+        this.setShowShare(false)
         // 移除选中状态
         var items = window.document.querySelectorAll(".filepond--item")
         for (var i = 0; i < items.length; i++) {

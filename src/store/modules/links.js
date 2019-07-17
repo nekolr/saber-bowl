@@ -6,7 +6,7 @@ export default {
         // 包装的链接
         wrappedLink: '',
         // 是否显示
-        showLinks: false,
+        showShare: false,
         // origin button type
         originType: 'primary',
         // html button type
@@ -21,8 +21,8 @@ export default {
         getWrappedLink (state) {
             return state.wrappedLink
         },
-        getShowLinks (state) {
-            return state.showLinks
+        getShowShare (state) {
+            return state.showShare
         },
         getOriginType (state) {
             return state.originType
@@ -41,8 +41,8 @@ export default {
         setWrappedLink (state, wrappedLink) {
             state.wrappedLink = wrappedLink
         },
-        setShowLinks (state, showLinks) {
-            state.showLinks = showLinks
+        setShowShare (state, showShare) {
+            state.showShare = showShare
         },
         setOriginType (state, originType) {
             state.originType = originType

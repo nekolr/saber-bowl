@@ -18,6 +18,9 @@ t.upload.tapToUndo = '点击撤销'
 
 t.links = {}
 t.links.successfulCopy = '复制成功'
+t.links.cancel = '取消'
+t.links.origin = '原始链接'
+t.links.copy = '复制'
 
 t.user = {}
 t.user.login = '登录'

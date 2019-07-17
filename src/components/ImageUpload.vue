@@ -71,7 +71,7 @@ export default {
     ...mapMutations('links', {
       setLink: 'setLink',
       setWrappedLink: 'setWrappedLink',
-      setShowLinks: 'setShowLinks',
+      setShowShare: 'setShowShare',
       setOriginType: 'setOriginType',
       setHtmlType: 'setHtmlType',
       setMarkdownType: 'setMarkdownType'
@@ -81,8 +81,8 @@ export default {
       var self = this
       if (!error) {
         window.document.querySelector("#filepond--item-" + file.id).addEventListener("click", function() {
-          // 显示链接
-          self.setShowLinks(true)
+          // 显示分享组件
+          self.setShowShare(true)
           self.setLink(file.serverId)
           self.setWrappedLink(self.$serverUrl + "images/" + file.serverId)
           // 设置选中的链接格式
@@ -104,10 +104,10 @@ export default {
       }
       if (el.classList.contains("selected")) {
         el.classList.remove("selected")
-        this.setShowLinks(false)
+        this.setShowShare(false)
       } else {
         el.classList.add("selected")
-        this.setShowLinks(true)
+        this.setShowShare(true)
       }
     }
   },

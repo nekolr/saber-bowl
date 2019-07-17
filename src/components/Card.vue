@@ -5,17 +5,34 @@
         </div>
         <ul class="icon">
             <li><a href="#"><i class="fa fa-search"></i></a></li>
-            <li><a href="javascript:void(0)" @click="openLinks"><i class="fa fa-link"></i></a></li>
+            <li><a href="javascript:void(0)" @click.stop="openShare" :shortName="image.shortName"><i class="fa fa-link" :shortName="image.shortName"></i></a></li>
         </ul>
+        <div class="s-card-content">
+            <h3 class="title">{{ image.shortName }}</h3>
+            <span class="post">{{ postTime }}</span>
+		</div>
     </div>
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations, mapGetters } from 'vuex'
+import dayjs from 'dayjs'
 
 export default {
   name: "Card",
   props: ["image"],
+//   created() {
+//       // 点击空白处
+//       var self = this
+//       window.document.body.addEventListener("click", function() {
+//           self.setShowLinks(false)
+//       }, false)
+//   },
+  computed: {
+      postTime: function() {
+          return dayjs(this.image.createTime).format('YYYY-MM-DD HH:mm:ss')
+      }
+  },
   methods: {
     ...mapMutations('links', {
       setLink: 'setLink',
@@ -25,8 +42,14 @@ export default {
       setHtmlType: 'setHtmlType',
       setMarkdownType: 'setMarkdownType'
     }),
-    openLinks() {
-        this.setShowLinks(true)
+    openShare(event) {
+        // var shortName = event.target.getAttribute("shortName")
+        // var x = event.target.getBoundingClientRect().left + window.document.documentElement.scrollLeft
+        // var y = event.target.getBoundingClientRect().top + window.document.documentElement.scrollTop
+        // this.setLink(shortName)
+        // this.setShowSmallShare(true)
+        // this.setSmallShareTop(y + 30)
+        // this.setSmallShareLeft(x + 30)
     }
   }
 }
@@ -37,7 +60,6 @@ export default {
     text-align: center;
     width: 250px;
     height: 250px;
-    float: left;
     margin: 5px;
     background: #fff;
     border-radius: 4px;
@@ -140,6 +162,45 @@ export default {
     max-height: 220px;
     transition: all 0.3s ease 0s;
 }
+
+.s-card .s-card-content{
+	width: 100%;
+	position: absolute;
+	bottom: 5px;
+	left: 0;
+	z-index: 1;
+	transition: all 0.3s ease 0s;
+}
+
+.s-card .title{
+	font-size: 22px;
+	font-weight: 600;
+	color: #47ddc8;
+	text-transform: uppercase;
+	text-shadow: 0 0 2px #000;
+	opacity: 0;
+	margin: 0 0 5px 0;
+	position: relative;
+	transform: translateY(100%);
+	transition: all 0.5s ease 0s;
+}
+.s-card:hover .title{
+	opacity: 1;
+	transform: translateY(0);
+}
+.s-card .post{
+	display: block;
+	font-size: 14px;
+	font-style: italic;
+	color: #fff;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	margin-bottom: 5px;
+	transform: translateX(-100%) rotateX(90deg);
+	transition: all 0.5s ease 0s;
+}
+
+.s-card:hover .post{ transform: translateY(0) rotate(0); }
 
 </style>
 
