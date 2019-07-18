@@ -1,7 +1,7 @@
 <template>
     <div class="s-card s-card-bordered">
         <div class="s-card-boby">
-            <img class="s-card-body-img" :src="$serverUrl + 'images/' + image.shortName" />
+            <img class="s-card-body-img" :src="$serverUrl + '/images/' + image.shortName" />
         </div>
         <ul class="icon">
             <li><a href="#"><i class="fa fa-search"></i></a></li>

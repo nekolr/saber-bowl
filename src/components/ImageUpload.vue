@@ -84,7 +84,7 @@ export default {
           // 显示分享组件
           self.setShowShare(true)
           self.setLink(file.serverId)
-          self.setWrappedLink(self.$serverUrl + "images/" + file.serverId)
+          self.setWrappedLink(self.$serverUrl + "/images/" + file.serverId)
           // 设置选中的链接格式
           self.setOriginType('primary')
           self.setHtmlType('default')

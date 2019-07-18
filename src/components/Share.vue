@@ -69,7 +69,7 @@ export default {
         this.setHtmlType('default')
         this.setMarkdownType('default')
         // 修改链接值
-        this.setWrappedLink(this.$serverUrl + "images/" + this.link)
+        this.setWrappedLink(this.$serverUrl + "/images/" + this.link)
     },
     handleHtml () {
         this.setOriginType('default')
