@@ -16,7 +16,7 @@
     :label-max-file-size="$t('upload.maxFileSize')"
     :max-file-size="10 * 1024 * 1024"
     allow-multiple="true"
-    accepted-file-types="image/jpeg, image/png"
+    accepted-file-types="image/jpeg, image/png, image/gif"
     v-bind:files="files"
     v-on:processfile="handleProcessFile" />
   </div>
@@ -57,7 +57,7 @@ export default {
       server: {
         url: this.$serverUrl,
         process: {
-          url: "api/upload",
+          url: "/api/upload",
           method: "POST",
           withCredentials: false,
           headers: {
