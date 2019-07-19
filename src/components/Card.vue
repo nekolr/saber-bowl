@@ -5,7 +5,13 @@
         </div>
         <ul class="icon">
             <li><a href="#"><i class="fa fa-search"></i></a></li>
-            <li><a href="javascript:void(0)" @click.stop="openShare" :shortName="image.shortName"><i class="fa fa-link" :shortName="image.shortName"></i></a></li>
+            <Poptip trigger="click" :content="$t('links.successfulCopy')" placement="bottom" width="200px">
+                <li>
+                    <a :id="'copyImage_' + image.id" href="javascript:void(0)">
+                        <i class="fa fa-link"></i>
+                    </a>
+                </li>
+            </Poptip>
         </ul>
         <div class="s-card-content">
             <h3 class="title">{{ image.shortName }}</h3>
@@ -17,17 +23,31 @@
 <script>
 import { mapMutations, mapGetters } from 'vuex'
 import dayjs from 'dayjs'
+import ClipboardJS from 'clipboard'
 
 export default {
   name: "Card",
   props: ["image"],
-//   created() {
-//       // 点击空白处
-//       var self = this
-//       window.document.body.addEventListener("click", function() {
-//           self.setShowLinks(false)
-//       }, false)
-//   },
+  data() {
+      return {
+          // 将 clipboard 放到属性中，由 vue 进行生命周期的维护
+          clipboard: ''
+      }
+  },
+  mounted() {
+    var self = this
+    var clipboard = new ClipboardJS("#copyImage_" + self.image.id, {
+        text: function() {
+            return self.$serverUrl + '/images/' + self.image.shortName
+        }
+    })
+
+    // 成功回调
+    clipboard.on('success', function(e) {
+        e.clearSelection();
+    })
+    this.clipboard = clipboard
+  },
   computed: {
       postTime: function() {
           return dayjs(this.image.createTime).format('YYYY-MM-DD HH:mm:ss')
@@ -41,16 +61,10 @@ export default {
       setOriginType: 'setOriginType',
       setHtmlType: 'setHtmlType',
       setMarkdownType: 'setMarkdownType'
-    }),
-    openShare(event) {
-        // var shortName = event.target.getAttribute("shortName")
-        // var x = event.target.getBoundingClientRect().left + window.document.documentElement.scrollLeft
-        // var y = event.target.getBoundingClientRect().top + window.document.documentElement.scrollTop
-        // this.setLink(shortName)
-        // this.setShowSmallShare(true)
-        // this.setSmallShareTop(y + 30)
-        // this.setSmallShareLeft(x + 30)
-    }
+    })
+  },
+  destroyed() {
+      this.clipboard.destroy()
   }
 }
 </script>
@@ -139,6 +153,7 @@ export default {
     background: #fff;
     font-size: 17px;
     color: #505050;
+    z-index: 6;
     transition: all 0.3s ease 0s;
 }
 
