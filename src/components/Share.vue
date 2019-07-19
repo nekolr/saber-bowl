@@ -93,7 +93,7 @@ export default {
 .uploader-links-container {
   position: fixed;
   bottom: 4.8em;
-  z-index: 5;
+  z-index: 999;
   right: 0;
   left: 0;
   height: 16.5em;
