@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters } from 'vuex'
+import { mapMutations } from 'vuex'
 import dayjs from 'dayjs'
 import ClipboardJS from 'clipboard'
 
