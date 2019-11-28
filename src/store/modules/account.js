@@ -12,7 +12,7 @@ export default {
          * @param {Object} param response 登录后获得的信息
          */
         login ({ commit }, response) {
-            return new Promise(async resolve => {
+            return new Promise(resolve => {
                 cookies.set('token', response.token)
                 // 填充 vuex 用户信息
                 commit('user/set', response.user, { root: true })
