@@ -58,8 +58,8 @@ export default {
       return imageApi
         .getImages(this.queryParams)
         .then(res => {
-          this.imageList = res.data
-          this.totalSize = res.totalSize
+          this.imageList = res.content
+          this.totalSize = res.totalElements
         })
         .catch(() => {})
     }
