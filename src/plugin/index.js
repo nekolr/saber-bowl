@@ -17,7 +17,7 @@ import 'iview/dist/styles/iview.css'
 export default {
     async install(Vue) {
         Vue.config.productionTip = false
-        Vue.prototype.$serverUrl = process.env.VUE_APP_SERVER_URL
+        Vue.prototype.$serverUrl = process.env.VUE_APP_SERVER_URL || window.location.protocol + "//" + window.location.host
         Vue.prototype.$appVersion = process.env.VUE_APP_VERSION
         // axios 挂载全局
         Vue.prototype.$axios = axios
